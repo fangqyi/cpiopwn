@@ -37,6 +37,7 @@ ds_init (dynamic_string *string, int size)
 {
   string->ds_length = size;
   string->ds_string = (char *) xmalloc (size);
+  printf("DString initialized at %p\n", string->ds_string); 
 }
 
 /* Expand dynamic string STRING, if necessary, to hold SIZE characters.  */
@@ -49,6 +50,7 @@ ds_resize (dynamic_string *string, int size)
       string->ds_length = size;
       string->ds_string = (char *) xrealloc ((char *) string->ds_string, size);
     }
+    printf("DString resized to size %10d bytes at new location %p\n", string->ds_length, string->ds_string);
 }
 
 /* Dynamic string S gets a string terminated by the EOS character

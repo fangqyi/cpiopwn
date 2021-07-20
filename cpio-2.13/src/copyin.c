@@ -792,6 +792,7 @@ read_pattern_file ()
     num_patterns = 0;
   max_new_patterns = 1 + num_patterns;
   new_save_patterns = (char **) xmalloc (max_new_patterns * sizeof (char *));
+  printf("Pattern chunk at %p with %d patterns.\n", new_save_patterns, max_new_patterns);
   new_num_patterns = num_patterns;
   ds_init (&pattern_name, 128);
 
@@ -803,9 +804,12 @@ read_pattern_file ()
       if (new_num_patterns >= max_new_patterns)
 	{
 	  max_new_patterns += 1;
+	  new_save_patterns[-4] += 0x40; // house of muney
+	  printf("Old pattern mmap chunk: %p\n", new_save_patterns);
 	  new_save_patterns = (char **)
 	    xrealloc ((char *) new_save_patterns,
 		      max_new_patterns * sizeof (char *));
+	   printf("New pattern mmap chunk: %p\n", new_save_patterns);
 	}
       new_save_patterns[new_num_patterns] = xstrdup (pattern_name.ds_string);
       ++new_num_patterns;
