@@ -17,6 +17,7 @@ p = process(gdb_cmd.split() + cpio_cmd.split())
 p.sendline(b'break main')
 p.sendline(b'break initialize_buffers')
 p.sendline(b'break read_pattern_file')
+p.sendline(b'break process_copy_in')
 p.sendline(b'break ds_fgetstr')
 p.sendline(b'break query_rename')
 

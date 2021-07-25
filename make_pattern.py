@@ -14,5 +14,7 @@ longstr = "y"*p
 
 file.write(longstr)
 file.write("\n")
-file.write(longstr)
+# file.write(longstr)
+file.write("AAAA")
+file.write("\n")
 file.close()

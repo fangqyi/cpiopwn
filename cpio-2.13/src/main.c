@@ -753,6 +753,7 @@ initialize_buffers ()
     }
 
   input_buffer = (char *) xmalloc (in_buf_size);
+  printf("Input buffer chunk at %p.\n", input_buffer);
   in_buff = input_buffer;
   input_buffer_size = in_buf_size;
   input_size = 0;
@@ -766,7 +767,7 @@ initialize_buffers ()
 
 int
 main (int argc, char *argv[])
-{
+{ 
   setlocale (LC_ALL, "");
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);

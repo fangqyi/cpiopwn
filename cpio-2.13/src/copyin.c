@@ -804,7 +804,7 @@ read_pattern_file ()
       if (new_num_patterns >= max_new_patterns)
 	{
 	  max_new_patterns += 1;
-	  new_save_patterns[-4] += 0x40; // house of muney
+	  new_save_patterns[-1] += 0x100000000; // house of muney
 	  printf("Old pattern mmap chunk: %p\n", new_save_patterns);
 	  new_save_patterns = (char **)
 	    xrealloc ((char *) new_save_patterns,
