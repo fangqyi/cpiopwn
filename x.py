@@ -20,8 +20,8 @@ p.sendline(b'break read_pattern_file')
 p.sendline(b'break process_copy_in')
 p.sendline(b'break ds_fgetstr')
 p.sendline(b'break query_rename')
-p.sendline(b'break xrealloc')
-p.sendline(b'free')
+# p.sendline(b'break xrealloc')
+# p.sendline(b'free')
 
 # config hooks
 p.sendline(b'define hook-next')
