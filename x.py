@@ -7,7 +7,7 @@ CPIO_BINARY = "./cpio-2.13/src/cpio"
 BLOCK_SIZE = 1<<20
 NUM_PATTERNS = 20000
 
-cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE} -r --block-size={BLOCK_SIZE} " + "y "*(NUM_PATTERNS-1)
+cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE} -r " + "y "*(NUM_PATTERNS-1)  # --block-size={BLOCK_SIZE}
 
 # open a gdb session
 gdb_cmd = f"gdb --args"
@@ -20,12 +20,17 @@ p.sendline(b'break read_pattern_file')
 p.sendline(b'break process_copy_in')
 p.sendline(b'break ds_fgetstr')
 p.sendline(b'break query_rename')
+p.sendline(b'break xrealloc')
+p.sendline(b'free')
 
 # config hooks
 p.sendline(b'define hook-next')
 p.sendline(b'vmmap')
 p.sendline(b'end')
 p.sendline(b'define hook-step')
+p.sendline(b'vmmap')
+p.sendline(b'end')
+p.sendline(b'define hook-continue')
 p.sendline(b'vmmap')
 p.sendline(b'end')
 # out = p.recvuntil("New pattern")
