@@ -36,6 +36,8 @@
 # define lchown(f,u,g) 0
 #endif
 
+void breakpoint_fn(){}
+
 static void copyin_regular_file(struct cpio_file_stat* file_hdr,
 				int in_file_des);
 
@@ -810,6 +812,9 @@ read_pattern_file ()
 	    xrealloc ((char *) new_save_patterns,
 		      max_new_patterns * sizeof (char *));
 	   printf("New pattern mmap chunk: %p\n", new_save_patterns);
+	   char* maybe_the_libc = malloc(0x100000000);
+	   printf("Mmap after free location: %p\n", maybe_the_libc);
+	   breakpoint_fn();
 	}
       new_save_patterns[new_num_patterns] = xstrdup (pattern_name.ds_string);
       ++new_num_patterns;
