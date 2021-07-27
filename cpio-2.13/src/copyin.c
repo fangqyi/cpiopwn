@@ -36,6 +36,8 @@
 # define lchown(f,u,g) 0
 #endif
 
+void breakpoint_fn(){}
+
 static void copyin_regular_file(struct cpio_file_stat* file_hdr,
 				int in_file_des);
 
