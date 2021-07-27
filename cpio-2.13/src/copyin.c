@@ -792,34 +792,48 @@ read_pattern_file ()
     num_patterns = 0;
   max_new_patterns = 1 + num_patterns;
   new_save_patterns = (char **) xmalloc (max_new_patterns * sizeof (char *));
-  printf("Pattern chunk at %p with %d patterns.\n", new_save_patterns, max_new_patterns);
+  // printf("Pattern chunk at %p with %d patterns.\n", new_save_patterns, max_new_patterns);
   new_num_patterns = num_patterns;
   ds_init (&pattern_name, 128);
 
   pattern_fp = fopen (pattern_file_name, "r");
   if (pattern_fp == NULL)
     open_fatal (pattern_file_name);
+  printf("prev_size of new_save_patterns: %lld\n", new_save_patterns[-2]);
+  printf("addr prev_size of new_save_patterns: %p\n", new_save_patterns-2);
+  printf("size and AMP of the new_save_patterns: %lld\n", new_save_patterns[-1]);
+  printf("addr size and AMP of the new_save_patterns: %p\n", new_save_patterns-1);
   while (ds_fgetstr (pattern_fp, &pattern_name, '\n') != NULL)
     {
+      int debug = does_noth_but_break(5);
+      printf("cry human! %d\n", debug);
       if (new_num_patterns >= max_new_patterns)
 	{
 	  max_new_patterns += 1;
-	  new_save_patterns[-1] += 0x597000;// house of muney
-	  printf("Old pattern mmap chunk: %p\n", new_save_patterns);
-    printf("===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n"
-           "===============================================================\n");
+    printf("prev_size of new_save_patterns: %lld\n", new_save_patterns[-2]);
+    printf("addr prev_size of new_save_patterns: %p\n", new_save_patterns-2);
+    printf("size and AMP of the new_save_patterns: %lld\n", new_save_patterns[-1]);
+    printf("addr size and AMP of the new_save_patterns: %p\n", new_save_patterns-1);
+    
+	  //new_save_patterns[-1] += 0x597000;// house of muney
+    //printf("size and AMP of the new_save_patterns after house of muney: %lld\n", new_save_patterns[-1]);
+	  // printf("Old pattern mmap chunk: %p\n", new_save_patterns);
+    // printf("===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n"
+    //       "===============================================================\n");
 	  new_save_patterns = (char **)
 	    xrealloc ((char *) new_save_patterns,
 		      max_new_patterns * sizeof (char *));
-	   printf("New pattern mmap chunk: %p\n", new_save_patterns);
+    char *new_m = (char *)malloc(0x550000); 
+    printf("addr new mem: %p\n", new_m);
+	  // printf("New pattern mmap chunk: %p\n", new_save_patterns);
 	}
       new_save_patterns[new_num_patterns] = xstrdup (pattern_name.ds_string);
       ++new_num_patterns;
@@ -834,6 +848,10 @@ read_pattern_file ()
   num_patterns = new_num_patterns;
 }
 
+int does_noth_but_break(int num){
+  num *= 2;
+  return num + 5;
+}
 
 uintmax_t
 from_ascii (char const *where, size_t digs, unsigned logbase)
@@ -1289,7 +1307,7 @@ process_copy_in ()
       swapping_halfwords = swapping_bytes = false;
 
       /* Start processing the next file by reading the header.  */
-      read_in_header (&file_hdr, in_file_des);
+      read_in_header (&file_hdr, in_file_des);  // causes gdb not able to terminate reading
 
 #ifdef DEBUG_CPIO
       if (debug_flag)

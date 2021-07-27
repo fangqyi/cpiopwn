@@ -4,8 +4,8 @@ from pwn import *
 
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
-BLOCK_SIZE = 1<<20
-NUM_PATTERNS = 20000
+BLOCK_SIZE = 16384 # 1<<20
+NUM_PATTERNS = 50000
 
 cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE} -r " + "y "*(NUM_PATTERNS-1)  # --block-size={BLOCK_SIZE}
 
@@ -20,6 +20,7 @@ p.sendline(b'break read_pattern_file')
 p.sendline(b'break process_copy_in')
 p.sendline(b'break ds_fgetstr')
 p.sendline(b'break query_rename')
+p.sendline(b'break does_noth_but_break')
 # p.sendline(b'break xrealloc')
 # p.sendline(b'free')
 
