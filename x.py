@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from pwn import *
-# import make_x_pattern
+import make_x_pattern
 
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
@@ -42,5 +42,7 @@ p.sendline(b'end')
 # p.interactive()
 # p.close()
 # exit()
-# p.sendline(b'r')
+p.sendline(b'r')
+p.sendline(b'c')
+p.sendline(b'c')
 p.interactive()
