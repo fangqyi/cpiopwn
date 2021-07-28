@@ -36,7 +36,10 @@
 # define lchown(f,u,g) 0
 #endif
 
-void breakpoint_fn(){}
+int breakpoint_fn(int num){
+	num = num+5;
+	return num*2;
+}
 
 static void copyin_regular_file(struct cpio_file_stat* file_hdr,
 				int in_file_des);
@@ -776,10 +779,6 @@ long_format (struct cpio_file_stat *file_hdr, char const *link_name)
   putc ('\n', stdout);
 }
 
-void breakpoint(){
-	return;
-}
-
 /* Read a pattern file (for the -E option).  Put a list of
    `num_patterns' elements in `save_patterns'.  Any patterns that were
    already in `save_patterns' (from the command line) are preserved.  */
@@ -793,6 +792,8 @@ read_pattern_file ()
   int i;
   dynamic_string pattern_name;
   FILE *pattern_fp;
+
+  breakpoint_fn(1);
 
   if (num_patterns < 0)
     num_patterns = 0;
@@ -811,11 +812,11 @@ read_pattern_file ()
   printf("addr size and AMP of the new_save_patterns: %p\n", new_save_patterns-1);
   while (ds_fgetstr (pattern_fp, &pattern_name, '\n') != NULL)
     {
-      // breakpoint();
+      // breakpoint_fn(1);
       if (new_num_patterns >= max_new_patterns)
 	{
 	  max_new_patterns += 1;
-	  if (max_new_patterns%1000000 == 0){
+	  if (max_new_patterns%10000000 == 0){
 	  	printf("Patterns read: %d\n\n", max_new_patterns);
 	  	printf("prev_size of new_save_patterns: %lld\n", new_save_patterns[-2]);
 	    printf("addr prev_size of new_save_patterns: %p\n", new_save_patterns-2);
@@ -845,7 +846,7 @@ read_pattern_file ()
       new_save_patterns[new_num_patterns] = xstrdup (pattern_name.ds_string);
       ++new_num_patterns;
     }
-    breakpoint();
+    ds_init (&pattern_name, 128);
   char *new_m = (char *)malloc(0x550000); 
   printf("addr new mem: %p\n", new_m);
   if (ferror (pattern_fp) || fclose (pattern_fp) == EOF)

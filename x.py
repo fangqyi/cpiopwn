@@ -6,9 +6,9 @@ from pwn import *
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
 BLOCK_SIZE = 16384 # 1<<20
-NUM_PATTERNS = 50000
+NUM_PATTERNS = 65500
 
-cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE}" # -D {PATTERN_FILE}"
+cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE}" + " y"*NUM_PATTERNS # -D {PATTERN_FILE}"
 
 # open a gdb session
 gdb_cmd = f"gdb --args"
@@ -21,7 +21,8 @@ p.sendline(b'break read_pattern_file')
 # p.sendline(b'break process_copy_in')
 # p.sendline(b'break ds_fgetstr')
 # p.sendline(b'break query_rename')
-p.sendline(b'break breakpoint')
+p.sendline(b'break breakpoint_fn')
+p.sendline(b'break ds_init')
 # p.sendline(b'break xrealloc')
 # p.sendline(b'free')
 
@@ -41,5 +42,5 @@ p.sendline(b'end')
 # p.interactive()
 # p.close()
 # exit()
-p.sendline(b'r')
+# p.sendline(b'r')
 p.interactive()
