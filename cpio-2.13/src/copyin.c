@@ -844,6 +844,10 @@ read_pattern_file ()
 	  // printf("New pattern mmap chunk: %p\n", new_save_patterns);
 	}
       new_save_patterns[new_num_patterns] = xstrdup (pattern_name.ds_string);
+      if (strlen(pattern_name.ds_string) > 0x1000) {
+      	printf("New mmap pattern at %p\n", new_save_patterns[new_num_patterns]);
+      	printf("Pattern chunk is at %p\n", new_save_patterns);
+      }
       ++new_num_patterns;
     }
     ds_init (&pattern_name, 128);
