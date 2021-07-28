@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
 
 from pwn import *
+# import make_x_pattern
 
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
 BLOCK_SIZE = 16384 # 1<<20
 NUM_PATTERNS = 50000
 
-cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE} -r " + "y "*(NUM_PATTERNS-1)  # --block-size={BLOCK_SIZE}
+cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE}" # -D {PATTERN_FILE}"
 
 # open a gdb session
 gdb_cmd = f"gdb --args"
 p = process(gdb_cmd.split() + cpio_cmd.split())
 
 # config breakpoints
-p.sendline(b'break main')
+# p.sendline(b'break main')
 # p.sendline(b'break initialize_buffers')
 p.sendline(b'break read_pattern_file')
-p.sendline(b'break process_copy_in')
-p.sendline(b'break ds_fgetstr')
-p.sendline(b'break query_rename')
-p.sendline(b'break does_noth_but_break')
+# p.sendline(b'break process_copy_in')
+# p.sendline(b'break ds_fgetstr')
+# p.sendline(b'break query_rename')
+p.sendline(b'break breakpoint')
 # p.sendline(b'break xrealloc')
 # p.sendline(b'free')
 
@@ -40,4 +41,5 @@ p.sendline(b'end')
 # p.interactive()
 # p.close()
 # exit()
+p.sendline(b'r')
 p.interactive()
