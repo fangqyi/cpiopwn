@@ -5,6 +5,7 @@ import make_x_pattern
 
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
+# CPIO_BINARY = "/bin/cpio"
 BLOCK_SIZE = 16384 # 1<<20
 NUM_PATTERNS = 65500
 
@@ -44,5 +45,5 @@ p.sendline(b'end')
 # exit()
 p.sendline(b'r')
 p.sendline(b'c')
-p.sendline(b'c')
+# p.sendline(b'c')
 p.interactive()

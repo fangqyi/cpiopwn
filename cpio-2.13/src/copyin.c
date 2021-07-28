@@ -851,8 +851,6 @@ read_pattern_file ()
       ++new_num_patterns;
     }
     ds_init (&pattern_name, 128);
-  char *new_m = (char *)malloc(0x550000); 
-  printf("addr new mem: %p\n", new_m);
   if (ferror (pattern_fp) || fclose (pattern_fp) == EOF)
     close_error (pattern_file_name);
 

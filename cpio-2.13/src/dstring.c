@@ -49,8 +49,8 @@ ds_resize (dynamic_string *string, int size)
     {
       string->ds_length = size;
       string->ds_string = (char *) xrealloc ((char *) string->ds_string, size);
+      printf("DString resized to size %10d bytes at new location %p\n", string->ds_length, string->ds_string);
     }
-    printf("DString resized to size %10d bytes at new location %p\n", string->ds_length, string->ds_string);
 }
 
 /* Dynamic string S gets a string terminated by the EOS character
