@@ -1,0 +1,2 @@
+docker build -t cpiopwn .
+docker run --mount type=bind,source=$(pwd),destination=/cpiopwn -it cpiopwn /bin/bash
