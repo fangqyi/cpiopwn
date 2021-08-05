@@ -791,6 +791,7 @@ read_pattern_file ()
   int new_num_patterns;
   int i;
   dynamic_string pattern_name;
+  dynamic_string ded;
   FILE *pattern_fp;
 
   breakpoint_fn(1);
@@ -817,11 +818,12 @@ read_pattern_file ()
 	{
 	  max_new_patterns += 1;
 	  if (max_new_patterns%10000000 == 0){
-	  	printf("Patterns read: %d\n\n", max_new_patterns);
-	  	printf("prev_size of new_save_patterns: %lld\n", new_save_patterns[-2]);
-	    printf("addr prev_size of new_save_patterns: %p\n", new_save_patterns-2);
-	    printf("size and AMP of the new_save_patterns: %lld\n", new_save_patterns[-1]);
-	    printf("addr size and AMP of the new_save_patterns: %p\n", new_save_patterns-1);
+	  	// printf("Patterns read: %d\n\n", max_new_patterns);
+	  	// printf("prev_size of new_save_patterns: %lld\n", new_save_patterns[-2]);
+	   //  printf("addr prev_size of new_save_patterns: %p\n", new_save_patterns-2);
+	   //  printf("size and AMP of the new_save_patterns: %lld\n", new_save_patterns[-1]);
+	   //  printf("addr size and AMP of the new_save_patterns: %p\n", new_save_patterns-1);
+	  	// ds_init (&ded, 128);
 	  }
     
     
@@ -850,7 +852,7 @@ read_pattern_file ()
       }
       ++new_num_patterns;
     }
-    ds_init (&pattern_name, 128);
+    ds_init (&ded, 128);
   if (ferror (pattern_fp) || fclose (pattern_fp) == EOF)
     close_error (pattern_file_name);
 

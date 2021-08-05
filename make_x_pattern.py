@@ -7,6 +7,8 @@ import time
 NUM_PATTERNS = (1<<27) # + 2085409
 longstr = b'y'*1090519038 # b'y'*2186534896
 
+# need to make the pattern chunk smaller
+
 start = time.time()
 print("Making pattern file...")
 file = open("patt", "wb")
