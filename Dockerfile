@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM kalilinux/kali-rolling
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -14,6 +14,7 @@ RUN apt install -y libxml2-dev
 RUN apt install -y libxslt1-dev
 RUN apt install -y zlib1g-dev
 RUN apt install -y patchelf 
+RUN apt install -y cpio
 
 RUN pip3 install pwntools 
 
