@@ -816,6 +816,9 @@ read_pattern_file ()
       // breakpoint_fn(1);
       if (new_num_patterns >= max_new_patterns)
 	{
+		if (pattern_name.ds_string[0] == 'z') {
+			ds_init (&ded, 128);
+		}
 	  max_new_patterns += 1;
 	  if (max_new_patterns%10000000 == 0){
 	  	// printf("Patterns read: %d\n\n", max_new_patterns);
