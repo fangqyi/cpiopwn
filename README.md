@@ -16,7 +16,7 @@ We've provided a Kali Dockerfile to run the exploit. The same exploit should wor
 
 And that's it! After building the malicious pattern file, a prompt will show up, and it will start processing commands after a little bit of time.
 
-### Warnings
+### Notes
 The exploit may take about a minute after the prompt appears before it starts responding to commands. We've provided a video of it running to show what should happen.
 
 Additionally, the exploit may only work on computers with at least 16 GB of RAM, as it forces cpio to read gigabytes of input. We tested the exploit on a server with 12 GB of RAM, and it crashed.
