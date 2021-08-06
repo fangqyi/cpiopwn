@@ -19,4 +19,4 @@ And that's it! After building the malicious pattern file, a prompt will show up,
 ### Warnings
 The exploit may take about a minute after the prompt appears before it starts responding to commands. We've provided a video of it running to show what should happen.
 
-Additionally, the exploit may only work on computers with at least 16 GB of RAM, as it forces cpio to read gigabytes of input. We tested the exploit on a server with 8 GB of RAM, and it crashed.
+Additionally, the exploit may only work on computers with at least 16 GB of RAM, as it forces cpio to read gigabytes of input. We tested the exploit on a server with 12 GB of RAM, and it crashed.
