@@ -1,4 +1,0 @@
-@set UPDATED 4 November 2019
-@set UPDATED-MONTH November 2019
-@set EDITION 2.13
-@set VERSION 2.13
