@@ -20,3 +20,7 @@ And that's it! After building the malicious pattern file, a prompt will show up,
 The exploit may take about a minute after the prompt appears before it starts responding to commands. We've provided a video of it running to show what should happen.
 
 Additionally, the exploit may only work on computers with at least 12 GB of RAM, as it forces cpio to read gigabytes of input. We had some issues with servers running out of RAM with previous versions of the exploit - the current version has been tested on computers with 12 and 16 GB of RAM, but not smaller.
+
+    |\__/,|   (`\
+  _.|o o  |_   ) )
+-(((---(((--------
