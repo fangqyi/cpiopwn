@@ -1,5 +1,5 @@
 # cpiopwn
-This is an RCE POC of an integer overflow bug in cpio. This exploit bypasses all binary protections except full RELRO. This exploit uses cpio 2.13 and libc 2.31.
+This is an ACE POC of an integer overflow bug in cpio. This exploit bypasses all binary protections except full RELRO. This exploit uses cpio 2.13 and libc 2.31.
 
 ## Running the exploit
 
